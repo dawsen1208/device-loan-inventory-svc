@@ -1,0 +1,41 @@
+name: Deploy Inventory Service
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: 下载仓库
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: 安装 Node
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # Step 3: 安装依赖
+      - name: Install Dependencies
+        run: npm ci
+
+      # Step 4: 编译 TypeScript
+      - name: Build
+        run: npm run build
+
+      # Step 5: 发布到 Azure Function App
+      - name: Deploy to Azure Functions
+        uses: Azure/functions-action@v1
+        with:
+          app-name: ${{ secrets.AZURE_INVENTORY_APP }}
+          package: '.'
+
+      # Step 6: ⭐ 部署后自动初始化库存
+      - name: Initialise Inventory
+        run: |
+          curl -X POST "${{ secrets.INVENTORY_INIT_URL }}" || true
