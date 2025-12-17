@@ -1,0 +1,26 @@
+{
+  "name": "device-loan-inventory-svc",
+  "version": "1.0.0",
+  "description": "Azure Functions inventory microservice for CDLS",
+  "type": "module",
+  "main": "dist/functions/index.js",
+
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "tsc",
+    "prestart": "npm run clean && npm run build",
+    "start": "func start"
+  },
+
+  "dependencies": {
+    "@azure/functions": "^4.0.0",
+    "@azure/cosmos": "^4.9.0"
+  },
+
+  "devDependencies": {
+    "@types/node": "^18.19.130",
+    "azure-functions-core-tools": "^4.x",
+    "rimraf": "^5.0.0",
+    "typescript": "^4.0.0"
+  }
+}
