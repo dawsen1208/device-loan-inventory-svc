@@ -27,6 +27,6 @@ export async function initInventory(
 app.http("initInventory", {
   methods: ["POST"],
   route: "inventory/init",
-  authLevel: "anonymous",
+  authLevel: "function",
   handler: initInventory
 });

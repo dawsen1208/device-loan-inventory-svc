@@ -64,6 +64,6 @@ export async function decrementInventory(
 app.http("decrementInventory", {
   methods: ["POST"],
   route: "inventory/{model}/decrement",
-  authLevel: "anonymous",
+  authLevel: "function",
   handler: decrementInventory
 });

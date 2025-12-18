@@ -56,6 +56,6 @@ export async function incrementInventory(
 app.http("incrementInventory", {
   methods: ["POST"],
   route: "inventory/{model}/increment",
-  authLevel: "anonymous",
+  authLevel: "function",
   handler: incrementInventory
 });
