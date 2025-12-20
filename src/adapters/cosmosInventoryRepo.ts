@@ -50,12 +50,25 @@ export class CosmosInventoryRepo {
     return resource as InventoryItem;
   }
 
+  private pkPath: string | null = null;
+
+  private async getPartitionKeyValue(item: InventoryItem): Promise<any> {
+    if (!this.pkPath) {
+      const { resource } = await this.container.read();
+      this.pkPath = resource?.partitionKey?.paths?.[0]?.substring(1) || "id";
+    }
+    // Handle nested paths if necessary, but assuming simple top-level for now
+    return (item as any)[this.pkPath];
+  }
+
   /**
    * 更新库存记录
    */
   async update(item: InventoryItem): Promise<InventoryItem> {
+    const pkValue = await this.getPartitionKeyValue(item);
+    
     const { resource } = await this.container
-      .item(item.id, item.id) // partition key = id
+      .item(item.id, pkValue) 
       .replace(item);
 
     return resource as InventoryItem;
