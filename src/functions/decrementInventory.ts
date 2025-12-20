@@ -56,7 +56,11 @@ export async function decrementInventory(
     context.error("decrementInventory error:", err);
     return {
       status: 500,
-      jsonBody: { error: "Server error" }
+      jsonBody: { 
+        error: "Server error", 
+        message: err.message, 
+        stack: err.stack 
+      }
     };
   }
 }

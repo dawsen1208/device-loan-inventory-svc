@@ -29,7 +29,16 @@ export async function ensureInventoryInitialised() {
   console.log("Initialising inventory...");
 
   for (const item of DEFAULT_ITEMS) {
-    await repo.create(item);
+    try {
+      await repo.create(item);
+    } catch (err: any) {
+      // 忽略 409 Conflict (已存在)
+      if (err.code === 409 || err.statusCode === 409) {
+        console.log(`Item ${item.id} already exists, skipping.`);
+      } else {
+        throw err;
+      }
+    }
   }
 
   console.log("Inventory initialised successfully.");
