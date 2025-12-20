@@ -56,6 +56,6 @@ export async function getInventory(
 app.http("getInventory", {
   methods: ["GET"],
   route: "inventory/{model}",
-  authLevel: "function",
+  authLevel: "anonymous",
   handler: getInventory
 });
