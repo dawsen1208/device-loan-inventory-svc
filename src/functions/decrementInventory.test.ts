@@ -1,5 +1,5 @@
-import { decrementInventory } from "./decrementInventory";
-import { CosmosInventoryRepo } from "../adapters/cosmosInventoryRepo";
+import { decrementInventory } from "./decrementInventory.js";
+import { CosmosInventoryRepo } from "../adapters/cosmosInventoryRepo.js";
 import { InvocationContext, HttpRequest } from "@azure/functions";
 
 // Mock dependencies
